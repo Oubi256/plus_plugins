@@ -64,7 +64,7 @@ internal class Share(
                 putExtra(Intent.EXTRA_SUBJECT, subject)
             }
             if (forceNewTask != null && forceNewTask == true) {
-                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
         }
         // If we dont want the result we use the old 'createChooser'
@@ -84,10 +84,6 @@ internal class Share(
             } else {
                 Intent.createChooser(shareIntent, null /* dialog title optional */)
             }
-
-        if (forceNewTask != null && forceNewTask == true) {
-            chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
         startActivity(chooserIntent, withResult)
     }
 
