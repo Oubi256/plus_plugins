@@ -28,6 +28,7 @@ internal class MethodCallHandler(
                     share.share(
                         call.argument<Any>("uri") as String,
                         subject = null,
+                        forceNewTask = false,
                         withResult = isWithResult,
                     )
                     success(isWithResult, result)
@@ -37,6 +38,7 @@ internal class MethodCallHandler(
                     share.share(
                         call.argument<Any>("text") as String,
                         call.argument<Any>("subject") as String?,
+                        call.argument<Any>("forceNewTask") as Boolean?,
                         isWithResult,
                     )
                     success(isWithResult, result)

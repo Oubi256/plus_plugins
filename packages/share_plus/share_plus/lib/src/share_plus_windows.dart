@@ -24,8 +24,7 @@ class SharePlusWindowsPlugin extends SharePlatform {
   }
 
   @override
-  Future<ShareResult> shareUri(
-    Uri uri, {
+  Future<ShareResult> shareUri(Uri uri, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,
@@ -36,10 +35,10 @@ class SharePlusWindowsPlugin extends SharePlatform {
 
   /// Share text.
   @override
-  Future<ShareResult> share(
-    String text, {
+  Future<ShareResult> share(String text, {
     String? subject,
     Rect? sharePositionOrigin,
+    bool? forceNewTask,
   }) async {
     final queryParameters = {
       if (subject != null) 'subject': subject,
@@ -51,7 +50,7 @@ class SharePlusWindowsPlugin extends SharePlatform {
       scheme: 'mailto',
       query: queryParameters.entries
           .map((e) =>
-              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
           .join('&'),
     );
 
@@ -68,15 +67,15 @@ class SharePlusWindowsPlugin extends SharePlatform {
 
   /// Share [XFile] objects with Result.
   @override
-  Future<ShareResult> shareXFiles(
-    List<XFile> files, {
+  Future<ShareResult> shareXFiles(List<XFile> files, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,
     List<String>? fileNameOverrides,
   }) {
     throw UnimplementedError(
-      'shareXFiles() is only available for Windows versions higher than 10.0.${VersionHelper.kWindows10RS5BuildNumber}.',
+      'shareXFiles() is only available for Windows versions higher than 10.0.${VersionHelper
+          .kWindows10RS5BuildNumber}.',
     );
   }
 }

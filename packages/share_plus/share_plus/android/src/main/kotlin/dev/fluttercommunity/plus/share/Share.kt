@@ -55,13 +55,16 @@ internal class Share(
         this.activity = activity
     }
 
-    fun share(text: String, subject: String?, withResult: Boolean) {
+    fun share(text: String, subject: String?, forceNewTask: Boolean? ,withResult: Boolean) {
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, text)
             if (subject != null) {
                 putExtra(Intent.EXTRA_SUBJECT, subject)
+            }
+            if (forceNewTask != null && forceNewTask == true) {
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
         }
         // If we dont want the result we use the old 'createChooser'
@@ -81,6 +84,10 @@ internal class Share(
             } else {
                 Intent.createChooser(shareIntent, null /* dialog title optional */)
             }
+
+        if (forceNewTask != null && forceNewTask == true) {
+            chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
         startActivity(chooserIntent, withResult)
     }
 
@@ -97,7 +104,7 @@ internal class Share(
         val shareIntent = Intent()
         when {
             (fileUris.isEmpty() && !text.isNullOrBlank()) -> {
-                share(text, subject, withResult)
+                share(text, subject, null, withResult)
                 return
             }
 

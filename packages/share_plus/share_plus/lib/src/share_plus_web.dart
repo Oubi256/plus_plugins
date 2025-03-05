@@ -24,14 +24,12 @@ class SharePlusWebPlugin extends SharePlatform {
   final Navigator _navigator;
 
   /// A constructor that allows tests to override the window object used by the plugin.
-  SharePlusWebPlugin(
-    this.urlLauncher, {
+  SharePlusWebPlugin(this.urlLauncher, {
     @visibleForTesting Navigator? debugNavigator,
   }) : _navigator = debugNavigator ?? window.navigator;
 
   @override
-  Future<ShareResult> shareUri(
-    Uri uri, {
+  Future<ShareResult> shareUri(Uri uri, {
     Rect? sharePositionOrigin,
   }) async {
     final data = ShareData(
@@ -55,7 +53,9 @@ class SharePlusWebPlugin extends SharePlatform {
     }
 
     try {
-      await _navigator.share(data).toDart;
+      await _navigator
+          .share(data)
+          .toDart;
     } on DOMException catch (e) {
       if (e.name case 'AbortError') {
         return _resultDismissed;
@@ -73,8 +73,7 @@ class SharePlusWebPlugin extends SharePlatform {
   }
 
   @override
-  Future<ShareResult> share(
-    String text, {
+  Future<ShareResult> share(String text, {
     String? subject,
     Rect? sharePositionOrigin,
   }) async {
@@ -110,7 +109,7 @@ class SharePlusWebPlugin extends SharePlatform {
         scheme: 'mailto',
         query: queryParameters.entries
             .map((e) =>
-                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
             .join('&'),
       );
 
@@ -130,7 +129,9 @@ class SharePlusWebPlugin extends SharePlatform {
     }
 
     try {
-      await _navigator.share(data).toDart;
+      await _navigator
+          .share(data)
+          .toDart;
 
       // actions is success, but can't get the action name
       return ShareResult.unavailable;
@@ -155,15 +156,14 @@ class SharePlusWebPlugin extends SharePlatform {
   /// available. This builds on the
   /// [`cross_file`](https://pub.dev/packages/cross_file) package.
   @override
-  Future<ShareResult> shareXFiles(
-    List<XFile> files, {
+  Future<ShareResult> shareXFiles(List<XFile> files, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,
     List<String>? fileNameOverrides,
   }) async {
     assert(
-        fileNameOverrides == null || files.length == fileNameOverrides.length);
+    fileNameOverrides == null || files.length == fileNameOverrides.length);
     final webFiles = <File>[];
     for (var index = 0; index < files.length; index++) {
       final xFile = files[index];
@@ -221,7 +221,9 @@ class SharePlusWebPlugin extends SharePlatform {
     }
 
     try {
-      await _navigator.share(data).toDart;
+      await _navigator
+          .share(data)
+          .toDart;
 
       // actions is success, but can't get the action name
       return ShareResult.unavailable;
@@ -241,11 +243,9 @@ class SharePlusWebPlugin extends SharePlatform {
     }
   }
 
-  Future<ShareResult> _downloadIfFallbackEnabled(
-    List<XFile> files,
-    List<String>? fileNameOverrides,
-    String message,
-  ) {
+  Future<ShareResult> _downloadIfFallbackEnabled(List<XFile> files,
+      List<String>? fileNameOverrides,
+      String message,) {
     developer.log(message);
     if (Share.downloadFallbackEnabled) {
       return _download(files, fileNameOverrides);
@@ -254,10 +254,8 @@ class SharePlusWebPlugin extends SharePlatform {
     }
   }
 
-  Future<ShareResult> _download(
-    List<XFile> files,
-    List<String>? fileNameOverrides,
-  ) async {
+  Future<ShareResult> _download(List<XFile> files,
+      List<String>? fileNameOverrides,) async {
     developer.log('Download files as fallback');
     try {
       for (final (index, file) in files.indexed) {
@@ -284,7 +282,8 @@ class SharePlusWebPlugin extends SharePlatform {
     return File(
       [bytes.buffer.toJS].toJS,
       nameOverride ?? file.name,
-      FilePropertyBag()..type = file.mimeType ?? _mimeTypeForPath(file, bytes),
+      FilePropertyBag()
+        ..type = file.mimeType ?? _mimeTypeForPath(file, bytes),
     );
   }
 

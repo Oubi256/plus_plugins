@@ -19,8 +19,7 @@ class SharePlusLinuxPlugin extends SharePlatform {
   }
 
   @override
-  Future<ShareResult> shareUri(
-    Uri uri, {
+  Future<ShareResult> shareUri(Uri uri, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,
@@ -31,10 +30,10 @@ class SharePlusLinuxPlugin extends SharePlatform {
 
   /// Share text.
   @override
-  Future<ShareResult> share(
-    String text, {
+  Future<ShareResult> share(String text, {
     String? subject,
     Rect? sharePositionOrigin,
+    bool? forceNewTask = false,
   }) async {
     final queryParameters = {
       if (subject != null) 'subject': subject,
@@ -46,7 +45,7 @@ class SharePlusLinuxPlugin extends SharePlatform {
       scheme: 'mailto',
       query: queryParameters.entries
           .map((e) =>
-              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
           .join('&'),
     );
 
@@ -63,8 +62,7 @@ class SharePlusLinuxPlugin extends SharePlatform {
 
   /// Share [XFile] objects with Result.
   @override
-  Future<ShareResult> shareXFiles(
-    List<XFile> files, {
+  Future<ShareResult> shareXFiles(List<XFile> files, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,

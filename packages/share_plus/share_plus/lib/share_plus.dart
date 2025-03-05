@@ -12,7 +12,7 @@ export 'package:share_plus_platform_interface/share_plus_platform_interface.dart
 
 export 'src/share_plus_linux.dart';
 export 'src/share_plus_windows.dart'
-    if (dart.library.js_interop) 'src/share_plus_web.dart';
+if (dart.library.js_interop) 'src/share_plus_web.dart';
 
 /// Plugin for summoning a platform share sheet.
 class Share {
@@ -37,8 +37,7 @@ class Share {
   /// from [MethodChannel].
   ///
   /// See documentation about [ShareResult] on [share] method.
-  static Future<ShareResult> shareUri(
-    Uri uri, {
+  static Future<ShareResult> shareUri(Uri uri, {
     Rect? sharePositionOrigin,
   }) async {
     return _platform.shareUri(
@@ -82,15 +81,16 @@ class Share {
   ///
   /// Will gracefully fall back to the non result variant if not implemented
   /// for the current environment and return [ShareResult.unavailable].
-  static Future<ShareResult> share(
-    String text, {
+  static Future<ShareResult> share(String text, {
     String? subject,
     Rect? sharePositionOrigin,
+    bool? forceNewTask = false,
   }) async {
     assert(text.isNotEmpty);
     return _platform.share(
       text,
       subject: subject,
+      forceNewTask: forceNewTask,
       sharePositionOrigin: sharePositionOrigin,
     );
   }
@@ -123,8 +123,7 @@ class Share {
   /// from [MethodChannel].
   ///
   /// See documentation about [ShareResult] on [share] method.
-  static Future<ShareResult> shareXFiles(
-    List<XFile> files, {
+  static Future<ShareResult> shareXFiles(List<XFile> files, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,
