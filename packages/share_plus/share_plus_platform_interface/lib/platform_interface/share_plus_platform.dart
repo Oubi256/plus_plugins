@@ -32,8 +32,7 @@ class SharePlatform extends PlatformInterface {
   }
 
   /// Share uri.
-  Future<ShareResult> shareUri(
-    Uri uri, {
+  Future<ShareResult> shareUri(Uri uri, {
     Rect? sharePositionOrigin,
   }) {
     return _instance.shareUri(
@@ -43,9 +42,9 @@ class SharePlatform extends PlatformInterface {
   }
 
   /// Share text with Result.
-  Future<ShareResult> share(
-    String text, {
+  Future<ShareResult> share(String text, {
     String? subject,
+    bool? forceNewTask = false,
     Rect? sharePositionOrigin,
   }) async {
     return await _instance.share(
@@ -56,8 +55,7 @@ class SharePlatform extends PlatformInterface {
   }
 
   /// Share [XFile] objects with Result.
-  Future<ShareResult> shareXFiles(
-    List<XFile> files, {
+  Future<ShareResult> shareXFiles(List<XFile> files, {
     String? subject,
     String? text,
     Rect? sharePositionOrigin,

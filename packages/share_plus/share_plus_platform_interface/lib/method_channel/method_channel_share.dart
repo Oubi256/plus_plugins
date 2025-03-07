@@ -48,6 +48,7 @@ class MethodChannelShare extends SharePlatform {
   Future<ShareResult> share(
     String text, {
     String? subject,
+        bool? forceNewTask = false,
     Rect? sharePositionOrigin,
   }) async {
     assert(text.isNotEmpty);
@@ -61,6 +62,10 @@ class MethodChannelShare extends SharePlatform {
       params['originY'] = sharePositionOrigin.top;
       params['originWidth'] = sharePositionOrigin.width;
       params['originHeight'] = sharePositionOrigin.height;
+    }
+
+    if (forceNewTask != null) {
+      params['forceNewTask'] = forceNewTask;
     }
 
     final result = await channel.invokeMethod<String>('share', params) ??
